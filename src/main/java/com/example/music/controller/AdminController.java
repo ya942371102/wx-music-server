@@ -1,11 +1,11 @@
 package com.example.music.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.music.service.AdminService;
-import com.example.music.utils.Consts;
+import com.example.music.service.impl.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,32 +13,28 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class AdminController {
-
     @Autowired
-    private AdminService adminService;
+    private AdminServiceImpl adminService;
 
-    /**
-     * 判断是否登录成功
-     */
-    @RequestMapping(value = "/admin/login/status", method = RequestMethod.GET)
-    public Object loginStatus(HttpServletRequest request, HttpSession session){
-        /*引入阿里巴巴的fastJson*/
+    // 判断是否登录成功
+    @ResponseBody
+    @RequestMapping(value = "/admin/login/status", method = {RequestMethod.GET,RequestMethod.POST})
+    public Object loginStatus(HttpServletRequest req, HttpSession session) {
         JSONObject jsonObject = new JSONObject();
-        /*用户，密码*/
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
-        /*判断结果*/
-        boolean flag = adminService.verifyPassword(name,password);
+        String name = req.getParameter("name");
+        String password = req.getParameter("password");
+        System.out.println(name);
 
-        if (flag){
-            jsonObject.put(Consts.CODE,1);
-            jsonObject.put(Consts.MSG,"登录成功");
-            session.setAttribute(Consts.NAME,name);
-            return jsonObject;
+        boolean res = adminService.verifyPassword(name, password);
+        if (res) {
+            jsonObject.put("code", 1);
+            jsonObject.put("msg", "登录成功");
+            session.setAttribute("name", name);
+        } else {
+            jsonObject.put("code", 0);
+            jsonObject.put("msg", "用户名或密码错误");
         }
-        jsonObject.put(Consts.CODE,0);
-        jsonObject.put(Consts.MSG,"用户名或密码错误");
         return jsonObject;
-    }
 
+    }
 }
