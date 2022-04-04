@@ -20,7 +20,7 @@ public class AdminController {
     /**
      * 判断是否登录成功
      */
-    @RequestMapping(value = "/admin/login/status", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/login/status", method = RequestMethod.GET)
     public Object loginStatus(HttpServletRequest request, HttpSession session){
         /*引入阿里巴巴的fastJson*/
         JSONObject jsonObject = new JSONObject();

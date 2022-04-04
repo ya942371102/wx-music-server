@@ -11,7 +11,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedOrigins("*")  //允许哪些网站进行访问
+                .allowedOriginPatterns("*")  //允许哪些网站进行访问
                 .allowedMethods("*")
                 .allowCredentials(true); //访问需要验证
 
