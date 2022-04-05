@@ -27,4 +27,7 @@ public interface SingerMapper {
 
     /*根据歌手名字模糊查询列表*/
     public List<Singer> stringOfName(String name);
+
+    /*根据性别查询男女歌手*/
+    public List<Singer> stringOfSex(Integer sex);
 }
