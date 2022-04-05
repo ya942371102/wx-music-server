@@ -60,4 +60,44 @@ public class SingerController {
         jsonObject.put("msg","添加失败");
         return jsonObject;
     }
+
+    /**
+     * 修改歌手
+     */
+    @RequestMapping("/update")
+    public JSONObject updateSinger(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String id = request.getParameter("id").trim();
+        String name = request.getParameter("name").trim();
+        String sex = request.getParameter("sex").trim();
+        String pic = request.getParameter("pic").trim();
+        String birth = request.getParameter("birth").trim();
+        String location = request.getParameter("location").trim();
+        String introduction = request.getParameter("introduction").trim();
+        DateFormat dateFormat = new SimpleDateFormat();
+        Date birthDate = new Date();
+        try {
+            birthDate = dateFormat.parse(birth);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Singer singer = new Singer();
+        singer.setId(new Integer(id));
+        singer.setName(name);
+        singer.setBirth(birthDate);
+        singer.setSex(new Byte(sex));
+        singer.setPic(pic);
+        singer.setLocation(location);
+        singer.setIntroduction(introduction);
+        boolean flag = singerService.update(singer);
+        if (flag){
+            jsonObject.put("code",1);
+            jsonObject.put("msg","修改成功");
+            return jsonObject;
+        }
+        jsonObject.put("code",0);
+        jsonObject.put("msg","修改失败");
+        return jsonObject;
+    }
+
 }
