@@ -65,7 +65,7 @@ public class SingerController {
      * 修改歌手
      */
     @RequestMapping("/update")
-    public JSONObject updateSinger(HttpServletRequest request){
+    public Object updateSinger(HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         String id = request.getParameter("id").trim();
         String name = request.getParameter("name").trim();
@@ -100,4 +100,41 @@ public class SingerController {
         return jsonObject;
     }
 
+
+    /**
+     * 删除歌手
+     */
+    @RequestMapping("/delete")
+    public Object deleteSinger(HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String id = request.getParameter("id").trim();
+        boolean flag = singerService.delete(Integer.parseInt(id));
+        return flag;
+    }
+
+    /**
+     * 查询所有歌手
+     */
+    @RequestMapping("/selectByPrimaryKey")
+    public Object selectByPrimaryKey(HttpServletRequest request){
+        return singerService.allSinger();
+    }
+
+    /**
+     * 根据歌手名字模糊查询列表
+     * */
+    @RequestMapping("/singerOfName")
+    public Object singerOfName(HttpServletRequest request){
+        String name = request.getParameter("name").trim();
+        return singerService.singerOfName("%"+name+"%");
+    }
+
+    /**
+     * 根据歌手性别模糊查询列表
+     * */
+    @RequestMapping("/singerOfSex")
+    public Object singerOfSex(HttpServletRequest request){
+        String sex = request.getParameter("sex").trim();
+        return singerService.singerOfSex(Integer.parseInt(sex));
+    }
 }
