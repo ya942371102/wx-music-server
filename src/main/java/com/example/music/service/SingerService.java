@@ -1,23 +1,21 @@
-package com.example.music.dao;
+package com.example.music.service;
 
 import com.example.music.domain.Singer;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * 歌手Dao
- * */
-@Repository
-public interface SingerMapper {
+ * 歌手Service接口
+ */
+public interface SingerService {
     /*增加*/
-    public int insert(Singer singer);
+    public boolean insert(Singer singer);
 
     /*修改*/
-    public int update(Singer singer);
+    public boolean update(Singer singer);
 
     /*删除*/
-    public int delete(Integer id);
+    public boolean delete(Integer id);
 
     /*根据主键查询对象*/
     public Singer selectByPrimaryKey(Integer id);
